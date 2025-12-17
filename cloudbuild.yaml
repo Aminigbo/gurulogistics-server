@@ -1,0 +1,35 @@
+steps:
+  # Install dependencies
+  - name: 'node:18'
+    entrypoint: 'npm'
+    args: ['install']
+
+  # Build Docker image
+  - name: 'docker'
+    args: ['build', '-t', 'gcr.io/blake-server/blake-backend', '.']
+
+  # Push the image to Google Container Registry
+  - name: 'docker'
+    args: ['push', 'gcr.io/blake-server/blake-backend']
+
+  # Deploy to Cloud Run (optional, adjust as needed)
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'blake-backend'
+      - '--image'
+      - 'gcr.io/blake-server/blake-backend'
+      - '--platform'
+      - 'managed'
+      - '--region'
+      - 'us-central1'
+      - '--allow-unauthenticated'
+
+images:
+  - 'gcr.io/blake-server/blake-backend'
+
+# Add logging configuration
+options:
+  logging: CLOUD_LOGGING_ONLY 
