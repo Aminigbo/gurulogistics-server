@@ -1,5 +1,6 @@
 const { transporter, fromEmail, fromName } = require("../../config/email-config");
 const { getAllRidersEmailsController } = require("../controllers");
+const { getIo } = require("../utilities/io");
 
 /**
  * Send OTP email to user
@@ -479,6 +480,15 @@ const sendDispatchNotificationController = async (req, res) => {
                 });
             }
         }
+
+        const io = getIo()
+        io.emit('DispatchRequest', { 
+            notify: {
+                title: "Dispatch Request Updated",
+                message: `The dispatch request has been updated`,
+                image: `https://yqmlwjrkxnamjkzbxbbo.supabase.co/storage/v1/object/public/assets/Group_50.png`
+            }
+        });
 
         const result = await sendDispatchNotificationEmail(email, null, dispatchInfo);
         console.log(" line 483: sendDispatchNotificationController", result)

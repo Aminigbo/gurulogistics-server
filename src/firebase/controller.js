@@ -296,7 +296,7 @@ function sendNotificationFunction({
         getUserByEmailController(email)
             .then(response => {
                 if (response[0].fcmToken) {
-                    // console.log("FCM token", response[0].fcmToken)
+                    console.log("FCM token", response[0].fcmToken)
                     sendToSingleTokenFunction({
                         token: response[0].fcmToken,
                         id: "Vendor:Home",

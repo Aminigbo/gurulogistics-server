@@ -6,6 +6,7 @@ const triggerDispatchRequestController = async (req, res) => {
     const orderId = req.body.orderId;
     const Order = await getOrderByIdController(orderId);
     if (Order.error) {
+        console.log("Order.error", Order.error)
         return res.status(400).json({
             error: Order.error,
             message: "Order not found"
@@ -13,6 +14,7 @@ const triggerDispatchRequestController = async (req, res) => {
     }
     const sender = await getUserByIdController(Order.data.user_id);
     if (sender.error) {
+        console.log("sender.error", sender.error)
         return res.status(400).json({
             error: sender.error,
             message: "Sender not found",
@@ -50,6 +52,34 @@ const triggerDispatchRequestController = async (req, res) => {
         email: sender.data.email,
     })
 
+    // console.log("Dispatch request triggered successfully", Order.data.user_id, sender.data.email)
+
+    return res.send({
+        success: true,
+        message: "Dispatch request triggered successfully",
+    })
+}
+
+const triggerSocket = async (req, res) => {
+    const orderId = req.body.orderId;
+    const Order = await getOrderByIdController(orderId);
+    if (Order.error) {
+        console.log("Order.error", Order.error)
+        return res.status(400).json({
+            error: Order.error,
+            message: "Order not found"
+        });
+    }
+    const io = getIo()
+    io.emit('dispatchRequestUpdated', {
+        rider: req.body.riderID,
+        orderId: req.body.orderId,
+        notify: {
+            title: "Dispatch Request Updated",
+            message: `The dispatch request has been updated`,
+            image: `https://yqmlwjrkxnamjkzbxbbo.supabase.co/storage/v1/object/public/assets/Group_50.png`
+        }
+    });
     return res.send({
         success: true,
         message: "Dispatch request triggered successfully",
@@ -58,4 +88,5 @@ const triggerDispatchRequestController = async (req, res) => {
 
 module.exports = {
     triggerDispatchRequestController,
+    triggerSocket
 }

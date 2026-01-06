@@ -23,7 +23,7 @@ const initializeSocket = (server) => {
     });
 
     socket.on('disconnect', () => {
-      // console.log('Client disconnected');
+      console.log('Client disconnected');
     });
   });
 };
