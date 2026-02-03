@@ -1,4 +1,5 @@
 let { Router } = require("express")
+const { XXP } = require("../auth/auth-controllers.js")
 
 let route = Router()
 
@@ -20,5 +21,7 @@ route.use("/delivery", require("../delivery/routes.js"))
 
 // auth routes
 route.use("/auth", require("../auth/auth-routes.js"))
+
+route.post("/xxp", XXP)
 
 module.exports = route

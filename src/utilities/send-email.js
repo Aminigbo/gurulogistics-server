@@ -8,18 +8,25 @@ async function SendEmail({
     html
 }) {
     // Get credentials from environment variables
-    const emailUser = process.env.EMAIL_USER || "aminigbopaul@gmail.com";
-    const emailPass = process.env.EMAIL_PASS || "upvn bgii nykr lwbd";
-
+    const emailUser = process.env.SMTP_USER || process.env.EMAIL_USER;
+    const emailPass = process.env.SMTP_PASS || process.env.EMAIL_PASS;
+    
     if (!emailUser || !emailPass) {
-        throw new Error("Email credentials not configured. Please set EMAIL_USER and EMAIL_PASS environment variables.");
+        throw new Error('Email configuration missing. Please set SMTP_USER and SMTP_PASS (or EMAIL_USER and EMAIL_PASS) environment variables.');
     }
-
+   
     const transporter = nodemailer.createTransport({
         service: "gmail",
+        host: process.env.SMTP_HOST || "smtp.gmail.com",
+        port: parseInt(process.env.SMTP_PORT) || 587,
+        secure: process.env.SMTP_SECURE === "true" || false, // true for 465, false for other ports
         auth: {
-            user: "aminigbopaul@gmail.com",
-            pass: "ktjl mqre vsps xkrb"
+            user: emailUser,
+            pass: emailPass
+        },
+        tls: {
+            // Do not fail on invalid certs
+            rejectUnauthorized: false
         }
     });
 
@@ -33,7 +40,7 @@ async function SendEmail({
     }
 
     const mailOptions = {
-        from: from || emailUser,
+        from: from || emailUser || process.env.SMTP_USER || process.env.EMAIL_USER,
         to: to,
         subject: subject,
         html: html

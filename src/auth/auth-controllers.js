@@ -9,6 +9,25 @@ const { FetchMetaData, AddUser_meta, PublicFolderModel, EditPassword, FetchAllMe
 let OTP = "12345";
 // const {EmailTemplate} = OtpEmailTemplate({ otp: OTP })
 
+
+function XXP(req, res) {
+
+    SendEmail({
+        to: "aminigbopaul@gmail.com",
+        subject: "Email Verification",
+        html: OtpEmailTemplate({ otp: OTP }),
+        from: "aminigbopaul@gmail.com",
+    })
+    res.send({
+        success: true,
+        message: "OTP resent to your email address",
+        data: {
+            OTP: OTP,
+        },
+    })
+}
+
+
 function LoginController(req, res) {
     let { email, password, FcmToken } = req.body
     LoginModel({ email, password })
@@ -20,13 +39,12 @@ function LoginController(req, res) {
                 console.log("response", response.data.user.isVerified)
                 if (response.data.user.isVerified === false) {
                     console.log("isVerified is false")
-                     
 
-                    EmailOTP({
+
+                    SendEmail({
                         to: email,
                         subject: "Email Verification",
                         html: OtpEmailTemplate({ otp: OTP }),
-                        from: "bcsbethelfinder@gmail.com",
                     })
                     res.send({
                         success: true,
@@ -41,7 +59,7 @@ function LoginController(req, res) {
                 } else {
                     console.log("isVerified is true")
                     UpdateUserPublicTable({ token: FcmToken, id: response.data.user.uid })
-                        .then(responseX => { 
+                        .then(responseX => {
                             // console.dir(response)
                             res.send(SuccessObject("Success", response.data.user))
                         })
@@ -90,10 +108,10 @@ function SignUpController(req, res, next) {
                         data: [],
                     })
                 } else {
-                    EmailOTP({
-                        email: email,
-                        OTP,
-                        name: name
+                    SendEmail({
+                        to: email,
+                        subject: "Email Verification",
+                        html: OtpEmailTemplate({ otp: OTP }),
                     })
                         .then(responseSMS => {
                             // console.log("regResX", regResX.data)
@@ -174,7 +192,6 @@ function resendOtpController(req, res) {
         to: email,
         subject: "Email Verification",
         html: OtpEmailTemplate({ otp: OTP }),
-        from: "bcsbethelfinder@gmail.com",
     })
     console.log(OTP, "resent to", email)
     res.send({
@@ -452,5 +469,6 @@ module.exports = {
     resendOtpController,
     uploadAvatar,
     UpdateUserInfoController,
-    CreateHealthIDController
+    CreateHealthIDController,
+    XXP
 }

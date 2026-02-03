@@ -6,7 +6,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 let route = Router()
-
+ 
 route.post("/login", LoginController)
 route.post("/signup", SignUpController)
 route.post("/verify-otp", verifyOtpController)
