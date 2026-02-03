@@ -1,6 +1,7 @@
 node_modules
-.env  
+.env
+config/fcm-config.json
+config/blakeRider-fcm-config.json
+*.json
 !package.json
 !package-lock.json
-config/*-fcm-config.json
-config/fcm-config.json
