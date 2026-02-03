@@ -5,11 +5,11 @@ steps:
     args: ['install']
 
   # Build Docker image
-  - name: 'docker'
+  - name: 'docker:24.0.5'
     args: ['build', '-t', 'gcr.io/blake-server/blake-backend', '.']
 
   # Push the image to Google Container Registry
-  - name: 'docker'
+  - name: 'docker:24.0.5'
     args: ['push', 'gcr.io/blake-server/blake-backend']
 
   # Deploy to Cloud Run (optional, adjust as needed)

@@ -80,6 +80,7 @@ const triggerSocket = async (req, res) => {
             image: `https://yqmlwjrkxnamjkzbxbbo.supabase.co/storage/v1/object/public/assets/Group_50.png`
         }
     });
+    console.log("dispatchRequestUpdated emitted", req.body.orderId)
     return res.send({
         success: true,
         message: "Dispatch request triggered successfully",

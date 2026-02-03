@@ -15,4 +15,10 @@ route.use("/triggers", require("../triggers/route.js"))
 // admin routes
 route.use("/admin", require("../admin/admin-routes.js"))
 
+// delivery routes
+route.use("/delivery", require("../delivery/routes.js"))
+
+// auth routes
+route.use("/auth", require("../auth/auth-routes.js"))
+
 module.exports = route
