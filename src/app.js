@@ -66,7 +66,7 @@ app.use("/api/v1", require("./routes/"))
 app.use("//api/v1", require("./routes/"))
 app.use("/", (req, res) => {
     res.send({
-        message: "Welcome to Guru Logistics server",
+        message: "Welcome to Guru Logistics serverX",
         status: "success",
         data: {
             name: "Guru Logistics",
