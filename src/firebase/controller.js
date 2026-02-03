@@ -1,6 +1,23 @@
+require("dotenv").config();
 var fcm = require('../../fcm/fcm-lib');
-var serviceAccount = require("../../config/fcm-config.json");
 const { getUserByEmailController } = require('../controllers');
+
+// Load service account from environment variables or config file
+let serviceAccount;
+if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+    // If service account is provided as JSON string in env
+    serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+} else if (process.env.FIREBASE_CONFIG_PATH) {
+    // If path to config file is provided
+    serviceAccount = require(process.env.FIREBASE_CONFIG_PATH);
+} else {
+    // Fallback to default config file (should be gitignored)
+    try {
+        serviceAccount = require('../../config/fcm-config.json');
+    } catch (error) {
+        throw new Error('Firebase service account not configured. Please set FIREBASE_SERVICE_ACCOUNT env variable or FIREBASE_CONFIG_PATH.');
+    }
+}
 
 var FCM = new fcm(serviceAccount);
 
