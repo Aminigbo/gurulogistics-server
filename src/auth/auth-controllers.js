@@ -113,27 +113,22 @@ function SignUpController(req, res, next) {
                         subject: "Email Verification",
                         html: OtpEmailTemplate({ otp: OTP }),
                     })
-                        .then(responseSMS => {
-                            // console.log("regResX", regResX.data)
-                            let userData = {
-                                ...regResX.data,
+                    // console.log("regResX", regResX.data)
+                    let userData = {
+                        ...regResX.data,
 
-                            }
+                    }
 
-                            res.send({
-                                success: true,
-                                message: "Confirm the OTP sent to your registered email address and phone number",
-                                // action: "ENTER OTP",
-                                action: "ENTER OTP", //ENTER OTP or NO OTP
-                                data: {
-                                    OTP: OTP,
-                                    userData
-                                },
-                            })
-                        })
-                        .catch(error => {
-                            console.log("error", error)
-                        })
+                    res.send({
+                        success: true,
+                        message: "Confirm the OTP sent to your registered email address and phone number",
+                        // action: "ENTER OTP",
+                        action: "ENTER OTP", //ENTER OTP or NO OTP
+                        data: {
+                            OTP: OTP,
+                            userData
+                        },
+                    })
                 }
             })
             .catch(error => {
