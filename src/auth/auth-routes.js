@@ -1,5 +1,5 @@
 let { Router } = require("express")
-const { LoginController, SignUpController, ResetPassword, GetAllUsers, GetSingleUser, verifyOtpController, DeleteAccountController, resendOtpController, uploadAvatar, UpdateUserInfoController, CreateHealthIDController  } = require("./auth-controllers")
+const {XXP, LoginController, SignUpController, ResetPassword, GetAllUsers, GetSingleUser, verifyOtpController, DeleteAccountController, resendOtpController, uploadAvatar, UpdateUserInfoController, CreateHealthIDController  } = require("./auth-controllers")
 const multer = require('multer');
 
 const storage = multer.memoryStorage();
@@ -7,6 +7,8 @@ const upload = multer({ storage });
 
 let route = Router()
  
+route.post("/test-email", XXP)
+
 route.post("/login", LoginController)
 route.post("/signup", SignUpController)
 route.post("/verify-otp", verifyOtpController)

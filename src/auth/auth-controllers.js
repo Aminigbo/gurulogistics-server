@@ -5,9 +5,9 @@ const { OtpEmailTemplate } = require("../utilities/email-templates/otp-email");
 const { SendEmail } = require("../utilities/send-email");
 const { SendSMS } = require("../utilities/send-sms");
 const { FetchMetaData, AddUser_meta, PublicFolderModel, EditPassword, FetchAllMetaData, SignupModel, LoginModel, UpdateUserPublicTable, UpdateUserInfoModel, DeleteUserModel, DeletePublicUserModel, FetchUserDataById, GetUserByUUIDmodel, ChangePassword, FetchUserByEmail } = require("./auth-models")
-// let OTP = Date.now().toString().slice(-5);
-let OTP = "12345";
-// const {EmailTemplate} = OtpEmailTemplate({ otp: OTP })
+let OTP = Date.now().toString().slice(-5);
+// let OTP = "12345";
+const {EmailTemplate} = OtpEmailTemplate({ otp: OTP })
 
 
 function XXP(req, res) {
