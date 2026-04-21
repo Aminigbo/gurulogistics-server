@@ -12,7 +12,7 @@ if (process.env.FIREBASE_SERVICE_ACCOUNT) {
 } else {
     // Fallback to default config file (should be gitignored)
     try {
-        serviceAccount = require('./fcm-config.json');
+        serviceAccount =JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
     } catch (error) {
         throw new Error('Firebase service account not configured. Please set FIREBASE_SERVICE_ACCOUNT env variable or FIREBASE_CONFIG_PATH.');
     }
